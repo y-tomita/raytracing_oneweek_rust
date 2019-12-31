@@ -1,5 +1,10 @@
-use crate::math::vec::Vec3;
+use super::vec::Vec3;
 
+/// ### Ray Function
+/// ```
+/// p(t) = A + tB
+/// ```
+/// A = ray origin, B = ray direction, t = ray parameter
 #[derive(Clone, Copy, Debug)]
 pub struct Ray
 {
@@ -17,8 +22,8 @@ impl Ray
         }
     }
 
-    // pub fn point_at_parameter(&self, t: f64) -> Vec3
-    // {
-    //     self.origin + t * self.direction
-    // }
+    pub fn point_at_parameter(&self, t: f64) -> Vec3
+    {
+        self.origin + t * self.direction
+    }
 }

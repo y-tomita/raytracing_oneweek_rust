@@ -122,3 +122,8 @@ pub fn dot(a: Vec3, b: Vec3) -> f64
 {
     a.dot(b)
 }
+
+pub fn make_unit(a: Vec3) -> Vec3
+{
+    a.make_unit_vec()
+}

@@ -1,10 +1,9 @@
 use crate::math::vec::*;
 use crate::math::ray::{Ray};
-
 use crate::ppm_util::*;
 
 /// create simple sphere image
-pub fn ch4_add_sphere(nx: i32, ny: i32)
+pub fn ch5_surfase_normals_and_multiple_objects(nx: i32, ny: i32)
 {
     let lower_left_corner = Vec3::new(-2.0, -1.0, -1.0);
     let horizontal = Vec3::new(4.0, 0.0, 0.0);
@@ -31,9 +30,11 @@ pub fn ch4_add_sphere(nx: i32, ny: i32)
 fn color(r: Ray) -> Vec3
 {
     // if ray hits the sphere, paint to screen
-    if hit_sphere(Vec3::new(0.0, 0.0, -1.0), 0.5, r)
+    let t = hit_sphere(Vec3::new(0.0, 0.0, -1.0), 0.5, r);
+    if t > 0.0
     {
-        return Vec3::new(1.0, 0.0, 0.0);
+        let normal = make_unit(r.point_at_parameter(t) - Vec3::new(0.0, 0.0, -1.0));
+        return 0.5 * Vec3::new(normal.x + 1.0, normal.y + 1.0, normal.z + 1.0);
     }
 
     // if ray doesn't hit the sphere, paint background
@@ -46,7 +47,7 @@ fn color(r: Ray) -> Vec3
 }
 
 /// judge if hit sphere
-fn hit_sphere(center: Vec3, radius: f64, r: Ray) -> bool
+fn hit_sphere(center: Vec3, radius: f64, r: Ray) -> f64
 {
     let oc = r.origin - center;
     let a = r.direction.dot(r.direction);
@@ -54,6 +55,18 @@ fn hit_sphere(center: Vec3, radius: f64, r: Ray) -> bool
     let c = dot(oc, oc) - (radius * radius);
 
     // b^2 - 4ac > 0
-    let decriminant = b*b - 4.0 * a * c;    
-    decriminant > 0.0
+    let discriminant = b*b - 4.0 * a * c;
+
+    if discriminant < 0.0
+    {
+        return -1.0;
+    }
+    else
+    {
+        // (-b - √b^2 -4ac) / 2a
+        let denominator = 2.0 * a;
+        let numerator = -b - discriminant.sqrt();
+
+        return numerator / denominator;
+    }
 }

@@ -8,4 +8,3 @@ edition = "2018"
 [dependencies]
 math = { path = "math" }
 hitable = { path = "hitable" }
-chapter = { path = "chapter" }

@@ -1,10 +1,14 @@
-extern crate chapter;
 use std::env;
+mod ch1;
+mod ch3;
+mod ch4;
+mod ch5;
+mod ppm_util;
 
-use chapter::ch1::*;
-use chapter::ch3::*;
-use chapter::ch4::*;
-use chapter::ch5::*;
+use ch1::*;
+use ch3::*;
+use ch4::*;
+use ch5::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();

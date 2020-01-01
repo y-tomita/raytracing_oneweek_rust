@@ -53,6 +53,20 @@ impl Mul<Vec3> for f64
     }
 }
 
+impl Div<f64> for Vec3
+{
+    type Output = Vec3;
+
+    fn div(self, other: f64) -> Vec3
+    {
+        Vec3 { 
+            x: self.x / other,
+            y: self.y / other,
+            z: self.z / other,
+        }
+    }
+}
+
 impl Div<Vec3> for Vec3
 {
     type Output = Vec3;
@@ -121,4 +135,9 @@ impl Vec3
 pub fn dot(a: Vec3, b: Vec3) -> f64
 {
     a.dot(b)
+}
+
+pub fn make_unit(a: Vec3) -> Vec3
+{
+    a.make_unit_vec()
 }

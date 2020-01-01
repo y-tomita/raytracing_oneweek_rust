@@ -1,7 +1,9 @@
+extern crate math;
 
-use crate::math::vec::{Vec3};
-use crate::ppm_util::*;
+use math::vec::{Vec3};
+use super::ppm_util::*;
 
+/// create simple rgb gradation image
 pub fn ch1_first_draw(nx: i32, ny: i32)
 {
     ppm_print_header(nx, ny);

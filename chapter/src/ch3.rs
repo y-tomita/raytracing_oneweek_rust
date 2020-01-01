@@ -1,8 +1,10 @@
-use crate::math::vec::{Vec3};
-use crate::math::ray::{Ray};
+extern crate math;
 
-use crate::ppm_util::*;
+use math::vec::*;
+use math::ray::*;
+use super::ppm_util::*;
 
+/// create simple ray sample image
 pub fn ch3_ray_simple_camera_backgrounds(nx: i32, ny: i32)
 {
     let lower_left_corner = Vec3::new(-2.0, -1.0, -1.0);
@@ -26,6 +28,7 @@ pub fn ch3_ray_simple_camera_backgrounds(nx: i32, ny: i32)
     }
 }
 
+/// create color from Ray
 fn color(r: Ray) -> Vec3
 {
     let unit_direction = r.direction.make_unit_vec();

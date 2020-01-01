@@ -1,8 +1,11 @@
-use crate::math::vec::*;
-use crate::math::ray::{Ray};
-use crate::ppm_util::*;
+extern crate math;
+extern crate hitable;
 
-use crate::hitable::sphere::Sphere;
+use math::vec::*;
+use math::ray::*;
+//use hitable::sphere::*;
+
+use super::ppm_util::*;
 
 /// create simple sphere image
 pub fn ch5_surfase_normals_and_multiple_objects(nx: i32, ny: i32)
@@ -12,10 +15,10 @@ pub fn ch5_surfase_normals_and_multiple_objects(nx: i32, ny: i32)
     let vertical = Vec3::new(0.0, 2.0, 0.0);
     let origin = Vec3::new(0.0, 0.0, 0.0);
 
-    let spheres: [Sphere; 2] = [
-        Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5),
-        Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0),
-    ];
+    // let spheres: [Sphere; 2] = [
+    //     Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5),
+    //     Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0),
+    // ];
 
     ppm_print_header(nx, ny);
     for y in (0..ny).rev()

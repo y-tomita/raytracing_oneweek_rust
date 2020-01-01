@@ -1,11 +1,8 @@
 [package]
-name = "raytracing_oneweek_rust"
+name = "math"
 version = "0.1.0"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-math = { path = "math" }
-hitable = { path = "hitable" }
-chapter = { path = "chapter" }

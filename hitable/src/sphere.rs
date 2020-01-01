@@ -1,5 +1,7 @@
-use crate::math::vec::*;
-use crate::math::ray::Ray;
+extern crate math;
+
+use math::vec::*;
+use math::ray::Ray;
 
 use super::hitable_trait::*;
 

@@ -1,6 +1,7 @@
 use std::env;
 
 mod math;
+mod hitable;
 mod ppm_util;
 
 mod ch1;

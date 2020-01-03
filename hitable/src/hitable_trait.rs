@@ -5,8 +5,11 @@ use math::ray::Ray;
 
 pub struct HitRecord
 {
+    /// ray parameter t
     pub t: f64,
+    /// ray hit point
     pub p: Vec3,
+    /// normal vec from hit point
     pub normal: Vec3,
 }
 

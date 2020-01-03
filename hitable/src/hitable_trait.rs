@@ -20,18 +20,18 @@ pub struct ScreenObjects
     pub components: Vec<Box<dyn Hitable>>,
 }
 
-// impl ScreenObjects
-// {
-//     pub fn run(&self, r: Ray, t_min: f64, t_max: f64, hit_record: &mut HitRecord) -> bool
-//     {
-//         for component in self.components.iter()
-//         {
-//            if component.hit(r, t_min, t_max, &mut hit_record)
-//            {
-//                return true;
-//            }
-//         }
+impl ScreenObjects
+{
+    pub fn is_hit_anything(&self, r: Ray, t_min: f64, t_max: f64, hit_record: &mut HitRecord) -> bool
+    {
+        for component in self.components.iter()
+        {
+           if component.hit(r, t_min, t_max, hit_record)
+           {
+               return true;
+           }
+        }
 
-//         false
-//     }
-// }
+        false
+    }
+}

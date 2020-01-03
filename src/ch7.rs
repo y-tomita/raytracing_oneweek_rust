@@ -1,42 +1,49 @@
-use std::f64;
-
 extern crate math;
 extern crate hitable;
 
+use std::f64;
+
 use math::vec::*;
 use math::ray::*;
+use math::camera::*;
 use hitable::hitable_trait::*;
 use hitable::sphere::*;
 
 use super::ppm_util::*;
 
-/// create simple sphere image
-pub fn ch5_surfase_normals_and_multiple_objects(nx: i32, ny: i32)
+/// impl antialiasing
+pub fn ch7_diffuse_materials(nx: i32, ny: i32)
 {
-    let lower_left_corner = Vec3::new(-2.0, -1.0, -1.0);
-    let horizontal = Vec3::new(4.0, 0.0, 0.0);
-    let vertical = Vec3::new(0.0, 2.0, 0.0);
-    let origin = Vec3::new(0.0, 0.0, 0.0);
-
     let draw_obj = ScreenObjects{
         components: vec![
             Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5)),
             Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0)),
         ],
     };
+    let cam = Camera::new();
+    let ns = 100;
 
     ppm_print_header(nx, ny);
     for y in (0..ny).rev()
     {
         for x in 0..nx
         {
-            let u = (x as f64) / (nx as f64);
-            let v = (y as f64) / (ny as f64);
-            let direction = lower_left_corner + u * horizontal + v * vertical;
-            let r = Ray::new(origin, direction);
-            let col = color(r, &draw_obj);
+            let mut col_vec = Vec3::new(0.0, 0.0, 0.0);
+            for _ in 0..ns
+            {
+                let rand1 = math::drand48();
+                let rand2 = math::drand48();
 
-            ppm_print_rgb(col.r(), col.g(), col.b());
+                let u = ((x as f64) + rand1) / (nx as f64);
+                let v = ((y as f64) + rand2) / (ny as f64);
+
+                let r = cam.get_ray(u, v);
+                let col = color(r, &draw_obj);
+                
+                col_vec = col_vec + col;
+            }
+            col_vec = col_vec / (ns as f64);
+            ppm_print_rgb(col_vec.r(), col_vec.g(), col_vec.b());
         }
     }
 }

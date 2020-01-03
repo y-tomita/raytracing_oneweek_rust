@@ -27,8 +27,8 @@ impl Hitable for Sphere
     fn hit(&self, r: Ray, t_min: f64, t_max: f64, rec: &mut HitRecord) -> bool
     {
         let oc = r.origin - self.center;
-        let a = r.direction.dot(r.direction);
-        let b = 2.0 * dot(r.direction, oc);
+        let a = dot(r.direction, r.direction);
+        let b = dot(oc, r.direction);
         let c = dot(oc, oc) - (self.radius * self.radius);
 
         let discriminant = b*b - a*c;

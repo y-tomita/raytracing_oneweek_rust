@@ -1,14 +1,17 @@
 use std::env;
+
 mod ch1;
 mod ch3;
 mod ch4;
 mod ch5;
+mod ch6;
 mod ppm_util;
 
 use ch1::*;
 use ch3::*;
 use ch4::*;
 use ch5::*;
+use ch6::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -22,6 +25,7 @@ fn main() {
         3 => ch3_ray_simple_camera_backgrounds(nx, ny),
         4 => ch4_add_sphere(nx, ny),
         5 => ch5_surfase_normals_and_multiple_objects(nx, ny),
+        6 => ch6_antialiasing(nx, ny),
         _ => println!("no implement"),
     }
 }

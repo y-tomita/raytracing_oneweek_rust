@@ -38,22 +38,25 @@ impl Hitable for Sphere
             let temp = (-b - discriminant_sq) / a;
             if t_min < temp && temp < t_max
             {
-                rec.t = temp;
-                rec.p = r.point_at_parameter(rec.t);
-                rec.normal = (rec.p - self.center) / self.radius;
+                update_record_point(rec, &r, self.center, self.radius, temp);
                 return true;
             }
 
             let temp = (-b + discriminant_sq) / a;
             if t_min < temp && temp < t_max
             {
-                rec.t = temp;
-                rec.p = r.point_at_parameter(rec.t);
-                rec.normal = (rec.p - self.center) / self.radius;
+                update_record_point(rec, &r, self.center, self.radius, temp);
                 return true;
             }
         }
 
         false
     }
+}
+
+fn update_record_point(rec: &mut HitRecord, ray: &Ray, center: Vec3, radius: f64, discriminant: f64)
+{
+    rec.t = discriminant;
+    rec.p = ray.point_at_parameter(discriminant);
+    rec.normal = (rec.p - center) / radius;
 }

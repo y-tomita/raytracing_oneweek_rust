@@ -141,3 +141,8 @@ pub fn make_unit(a: Vec3) -> Vec3
 {
     a.make_unit_vec()
 }
+
+pub fn convert_to_gamma(col: Vec3) -> Vec3
+{
+    Vec3::new(col.x.sqrt(), col.y.sqrt(), col.z.sqrt())
+}

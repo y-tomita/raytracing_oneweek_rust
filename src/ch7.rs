@@ -43,6 +43,7 @@ pub fn ch7_diffuse_materials(nx: i32, ny: i32)
                 col_vec = col_vec + col;
             }
             col_vec = col_vec / (ns as f64);
+            col_vec = convert_to_gamma(col_vec);
             ppm_print_rgb(col_vec.r(), col_vec.g(), col_vec.b());
         }
     }
@@ -63,7 +64,7 @@ fn color(r: Ray, draw_obj: &ScreenObjects, rec_num: &mut i32) -> Vec3
         return Vec3::new(0.0, 0.0, 0.0);
     }
 
-    if draw_obj.is_hit_anything(r, 0.0, f64::MAX, &mut rec)
+    if draw_obj.is_hit_anything(r, 0.001, f64::MAX, &mut rec)
     {
         let target = rec.p + rec.normal + random_in_unit_sphere();
         *rec_num += 1;

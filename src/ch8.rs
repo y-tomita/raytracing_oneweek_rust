@@ -19,7 +19,7 @@ pub fn ch8_metal(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{
         components: vec![
-            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0),     0.5,    Rc::new(Lambertian::new(Vec3::new(0.8, 0.3, 0.0))))),
+            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0),     0.5,    Rc::new(Lambertian::new(Vec3::new(0.8, 1.0, 1.0))))),
             Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0),  100.0,  Rc::new(Lambertian::new(Vec3::new(0.8, 0.8, 0.0))))),
             Box::new(Sphere::new(Vec3::new(1.0, 0.0, -1.0),     0.5,    Rc::new(Metal::new(Vec3::new(0.8, 0.6, 0.2))))),
             Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0),    0.5,    Rc::new(Metal::new(Vec3::new(0.8, 0.8, 0.8))))),
@@ -60,7 +60,7 @@ fn color(r: Ray, draw_obj: &ScreenObjects, depth: i32) -> Vec3
         t: 0.0,
         p: Vec3::new(0.0, 0.0, 0.0),
         normal: Vec3::new(0.0, 0.0, 0.0),
-        mat: Rc::new(Lambertian::new(Vec3::new(0.0, 0.0, 0.0))),
+        mat: Rc::new(Lambertian::new(Vec3::new(1.0, 1.0, 1.0))),
     };
 
     if draw_obj.is_hit_anything(r, 0.001, f64::MAX, &mut rec)

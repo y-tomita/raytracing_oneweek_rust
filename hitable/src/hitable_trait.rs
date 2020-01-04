@@ -32,14 +32,24 @@ impl ScreenObjects
 {
     pub fn is_hit_anything(&self, r: Ray, t_min: f64, t_max: f64, hit_record: &mut HitRecord) -> bool
     {
+        let mut closest_so_far = t_max;
+        let mut anything_hit = false;
         for component in self.components.iter()
         {
-           if component.hit(r, t_min, t_max, hit_record)
-           {
-               return true;
-           }
+            let mut temp_hit = HitRecord {
+                t: 0.0,
+                p: Vec3::zero(),
+                normal: Vec3::zero(),
+                mat: Rc::new(Lambertian::new(Vec3::zero())),
+            };
+            if component.hit(r, t_min, closest_so_far, &mut temp_hit)
+            {
+                *hit_record = temp_hit;
+                closest_so_far = hit_record.t;
+                anything_hit = true;
+            }
         }
 
-        false
+        anything_hit
     }
 }

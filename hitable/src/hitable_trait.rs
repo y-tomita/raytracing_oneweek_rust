@@ -1,7 +1,10 @@
 extern crate math;
 
+use std::rc::Rc;
 use math::vec::*;
 use math::ray::Ray;
+
+use super::material::*;
 
 pub struct HitRecord
 {
@@ -11,6 +14,8 @@ pub struct HitRecord
     pub p: Vec3,
     /// normal vec from hit point
     pub normal: Vec3,
+    /// material
+    pub mat: Rc<dyn Material>,
 }
 
 pub trait Hitable

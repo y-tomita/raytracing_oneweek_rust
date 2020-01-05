@@ -18,6 +18,7 @@ pub struct Lambertian
 pub struct Metal
 {
     pub albedo: Vec3,
+    pub fuzz: f64,
 }
 
 impl Lambertian
@@ -32,10 +33,11 @@ impl Lambertian
 
 impl Metal
 {
-    pub fn new(albedo: Vec3) -> Metal
+    pub fn new(albedo: Vec3, fuzz: f64) -> Metal
     {
         Metal {
             albedo: albedo,
+            fuzz: fuzz,
         }
     }
 }
@@ -56,7 +58,7 @@ impl Material for Metal
     fn scatter(&self, r_in: Ray, hit_record: &HitRecord, attenuation: &mut Vec3, scattered: &mut Ray) -> bool
     {
         let reflected = reflect(r_in.direction.make_unit_vec(), hit_record.normal);
-        *scattered = Ray::new(hit_record.p, reflected);
+        *scattered = Ray::new(hit_record.p, reflected + self.fuzz * math::random_in_unit_sphere());
         *attenuation = self.albedo;
         
         dot(scattered.direction, hit_record.normal) > 0.0

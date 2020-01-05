@@ -1,24 +1,24 @@
 use std::env;
 
-mod ch1;
-mod ch3;
-mod ch4;
-mod ch5;
-mod ch6;
-mod ch7;
-mod ch8;
-mod ch9;
+mod ch01;
+mod ch03;
+mod ch04;
+mod ch05;
+mod ch06;
+mod ch07;
+mod ch08;
+mod ch09;
 mod ch10;
 mod ppm_util;
 
-use ch1::*;
-use ch3::*;
-use ch4::*;
-use ch5::*;
-use ch6::*;
-use ch7::*;
-use ch8::*;
-use ch9::*;
+use ch01::*;
+use ch03::*;
+use ch04::*;
+use ch05::*;
+use ch06::*;
+use ch07::*;
+use ch08::*;
+use ch09::*;
 use ch10::*;
 
 fn main() {
@@ -29,14 +29,14 @@ fn main() {
     let number = args[3].parse::<i32>().unwrap();
     match number
     {
-        1 => ch1_first_draw(nx, ny),
-        3 => ch3_ray_simple_camera_backgrounds(nx, ny),
-        4 => ch4_add_sphere(nx, ny),
-        5 => ch5_surfase_normals_and_multiple_objects(nx, ny),
-        6 => ch6_antialiasing(nx, ny),
-        7 => ch7_diffuse_materials(nx, ny),
-        8 => ch8_metal(nx, ny),
-        9 => ch9_dielectrics(nx, ny),
+        1 => ch01_first_draw(nx, ny),
+        3 => ch03_ray_simple_camera_backgrounds(nx, ny),
+        4 => ch04_add_sphere(nx, ny),
+        5 => ch05_surfase_normals_and_multiple_objects(nx, ny),
+        6 => ch06_antialiasing(nx, ny),
+        7 => ch07_diffuse_materials(nx, ny),
+        8 => ch08_metal(nx, ny),
+        9 => ch09_dielectrics(nx, ny),
         10 => ch10_positionable_camera(nx, ny),
         _ => println!("no implement"),
     }

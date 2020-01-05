@@ -1,17 +1,32 @@
-extern crate math;
+use std::f64;
 
+extern crate math;
+extern crate hitable;
+
+use std::rc::Rc;
 use math::vec::*;
 use math::ray::*;
+use hitable::hitable_trait::*;
+use hitable::sphere::*;
+use hitable::material::*;
+
 use super::ppm_util::*;
 
 /// create simple sphere image
-pub fn ch4_add_sphere(nx: i32, ny: i32)
+pub fn ch05_surfase_normals_and_multiple_objects(nx: i32, ny: i32)
 {
     let lower_left_corner = Vec3::new(-2.0, -1.0, -1.0);
     let horizontal = Vec3::new(4.0, 0.0, 0.0);
     let vertical = Vec3::new(0.0, 2.0, 0.0);
     let origin = Vec3::new(0.0, 0.0, 0.0);
-    
+
+    let draw_obj = ScreenObjects{
+        components: vec![
+            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5, Rc::new(Lambertian::new(Vec3::zero())))),
+            Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0, Rc::new(Lambertian::new(Vec3::zero())))),
+        ],
+    };
+
     ppm_print_header(nx, ny);
     for y in (0..ny).rev()
     {
@@ -21,7 +36,7 @@ pub fn ch4_add_sphere(nx: i32, ny: i32)
             let v = (y as f64) / (ny as f64);
             let direction = lower_left_corner + u * horizontal + v * vertical;
             let r = Ray::new(origin, direction);
-            let col = color(r);
+            let col = color(r, &draw_obj);
 
             ppm_print_rgb(col.r(), col.g(), col.b());
         }
@@ -29,12 +44,19 @@ pub fn ch4_add_sphere(nx: i32, ny: i32)
 }
 
 /// create color from Ray
-fn color(r: Ray) -> Vec3
+fn color(r: Ray, draw_obj: &ScreenObjects) -> Vec3
 {
-    // if ray hits the sphere, paint to screen
-    if hit_sphere(Vec3::new(0.0, 0.0, -1.0), 0.5, r)
+    let mut rec = HitRecord{
+        t: 0.0,
+        p: Vec3::new(0.0, 0.0, 0.0),
+        normal: Vec3::new(0.0, 0.0, 0.0),
+        mat: Rc::new(Lambertian::new(Vec3::new(0.0, 0.0, 0.0))),
+    };
+    
+    // if hit anything, return normal map
+    if draw_obj.is_hit_anything(r, 0.0, f64::MAX, &mut rec)
     {
-        return Vec3::new(1.0, 0.0, 0.0);
+        return 0.5 * Vec3::new(rec.normal.x + 1.0, rec.normal.y + 1.0, rec.normal.z + 1.0);
     }
 
     // if ray doesn't hit the sphere, paint background
@@ -44,17 +66,4 @@ fn color(r: Ray) -> Vec3
     let tb = t * Vec3::new(0.5, 0.7, 1.0);
     
     a + tb
-}
-
-/// judge if hit sphere
-fn hit_sphere(center: Vec3, radius: f64, r: Ray) -> bool
-{
-    let oc = r.origin - center;
-    let a = r.direction.dot(r.direction);
-    let b = 2.0 * dot(r.direction, oc);
-    let c = dot(oc, oc) - (radius * radius);
-
-    // b^2 - 4ac > 0
-    let discriminant = b*b - 4.0 * a * c;    
-    discriminant > 0.0
 }

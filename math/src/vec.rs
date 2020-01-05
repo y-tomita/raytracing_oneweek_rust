@@ -2,6 +2,7 @@ use std::ops::Add;
 use std::ops::Sub;
 use std::ops::Mul;
 use std::ops::Div;
+use std::ops::Neg;
 
 #[derive(Clone, Copy, Debug)]
 pub struct Vec3
@@ -9,6 +10,16 @@ pub struct Vec3
     pub x: f64,
     pub y: f64,
     pub z: f64,
+}
+
+impl Neg for Vec3
+{
+    type Output = Vec3;
+
+    fn neg(self) -> Vec3
+    {
+        Vec3::new(-self.x, -self.y, -self.z)
+    }
 }
 
 impl Add<Vec3> for Vec3
@@ -105,6 +116,11 @@ impl Vec3
     pub fn zero() -> Vec3
     {
         Vec3::new(0.0, 0.0, 0.0)
+    }
+
+    pub fn one() -> Vec3
+    {
+        Vec3::new(1.0, 1.0, 1.0)
     }
 
     pub fn r(&self) -> f64 { self.x }

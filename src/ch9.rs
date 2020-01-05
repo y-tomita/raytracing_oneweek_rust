@@ -19,10 +19,11 @@ pub fn ch9_dielectrics(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{
         components: vec![
-            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0),     0.5,    Rc::new(Lambertian::new(Vec3::new(0.8, 1.0, 1.0))))),
+            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0),     0.5,    Rc::new(Lambertian::new(Vec3::new(0.1, 0.2, 0.5))))),
             Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0),  100.0,  Rc::new(Lambertian::new(Vec3::new(0.8, 0.8, 0.0))))),
-            Box::new(Sphere::new(Vec3::new(1.0, 0.0, -1.0),     0.5,    Rc::new(Metal::new(Vec3::new(0.8, 0.6, 0.2), 0.5)))),
-            Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0),    0.5,    Rc::new(Metal::new(Vec3::new(0.8, 0.8, 0.8), 0.9)))),
+            Box::new(Sphere::new(Vec3::new(1.0, 0.0, -1.0),     0.5,    Rc::new(Metal::new(Vec3::new(0.8, 0.6, 0.2), 0.0)))),
+            Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0),    0.5,    Rc::new(Dielectric::new(1.5)))),
+            Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0),    -0.45,  Rc::new(Dielectric::new(1.5)))),
         ],
     };
     let cam = Camera::new();

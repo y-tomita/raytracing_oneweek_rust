@@ -52,4 +52,9 @@ impl ScreenObjects
 
         anything_hit
     }
+
+    pub fn add(&mut self, component: Box<dyn Hitable>)
+    {
+        self.components.push(component);
+    }
 }

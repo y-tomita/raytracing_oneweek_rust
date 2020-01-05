@@ -8,6 +8,7 @@ mod ch6;
 mod ch7;
 mod ch8;
 mod ch9;
+mod ch10;
 mod ppm_util;
 
 use ch1::*;
@@ -18,6 +19,7 @@ use ch6::*;
 use ch7::*;
 use ch8::*;
 use ch9::*;
+use ch10::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -35,6 +37,7 @@ fn main() {
         7 => ch7_diffuse_materials(nx, ny),
         8 => ch8_metal(nx, ny),
         9 => ch9_dielectrics(nx, ny),
+        10 => ch10_positionable_camera(nx, ny),
         _ => println!("no implement"),
     }
 }

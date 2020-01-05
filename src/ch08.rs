@@ -15,7 +15,7 @@ use hitable::material::*;
 use super::ppm_util::*;
 
 /// impl antialiasing
-pub fn ch8_metal(nx: i32, ny: i32)
+pub fn ch08_metal(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{
         components: vec![

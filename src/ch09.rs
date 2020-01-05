@@ -7,19 +7,23 @@ use std::rc::Rc;
 use math::vec::*;
 use math::ray::*;
 use math::camera::*;
+
 use hitable::hitable_trait::*;
 use hitable::sphere::*;
 use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// impl antialiasing
-pub fn ch7_diffuse_materials(nx: i32, ny: i32)
+/// impl
+pub fn ch09_dielectrics(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{
         components: vec![
-            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0), 0.5, Rc::new(Lambertian::new(Vec3::zero())))),
-            Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0), 100.0, Rc::new(Lambertian::new(Vec3::zero())))),
+            Box::new(Sphere::new(Vec3::new(0.0, 0.0, -1.0),     0.5,    Rc::new(Lambertian::new(Vec3::new(0.1, 0.2, 0.5))))),
+            Box::new(Sphere::new(Vec3::new(0.0, -100.5, -1.0),  100.0,  Rc::new(Lambertian::new(Vec3::new(0.8, 0.8, 0.0))))),
+            Box::new(Sphere::new(Vec3::new(1.0, 0.0, -1.0),     0.5,    Rc::new(Metal::new(Vec3::new(0.8, 0.6, 0.2), 0.0)))),
+            Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0),    0.5,    Rc::new(Dielectric::new(1.5)))),
+            Box::new(Sphere::new(Vec3::new(-1.0, 0.0, -1.0),    -0.45,  Rc::new(Dielectric::new(1.5)))),
         ],
     };
     let cam = Camera::new();
@@ -39,7 +43,7 @@ pub fn ch7_diffuse_materials(nx: i32, ny: i32)
                 let u = ((x as f64) + rand1) / (nx as f64);
                 let v = ((y as f64) + rand2) / (ny as f64);
                 let r = cam.get_ray(u, v);
-                let col = color(r, &draw_obj);
+                let col = color(r, &draw_obj, 0);
                 
                 col_vec = col_vec + col;
             }
@@ -51,19 +55,27 @@ pub fn ch7_diffuse_materials(nx: i32, ny: i32)
 }
 
 /// create color from Ray
-fn color(r: Ray, draw_obj: &ScreenObjects) -> Vec3
+fn color(r: Ray, draw_obj: &ScreenObjects, depth: i32) -> Vec3
 {
     let mut rec = HitRecord{
         t: 0.0,
         p: Vec3::new(0.0, 0.0, 0.0),
         normal: Vec3::new(0.0, 0.0, 0.0),
-        mat: Rc::new(Lambertian::new(Vec3::new(0.0, 0.0, 0.0))),
+        mat: Rc::new(Lambertian::new(Vec3::new(1.0, 1.0, 1.0))),
     };
-    
+
     if draw_obj.is_hit_anything(r, 0.001, f64::MAX, &mut rec)
     {
-        let target = rec.p + rec.normal + math::random_in_unit_sphere();
-        return 0.5 * color(Ray::new(rec.p, target - rec.p), draw_obj);
+        let mut scatterd = Ray::new(Vec3::zero(), Vec3::zero());
+        let mut attenuation = Vec3::zero();
+        if depth < 50 && rec.mat.scatter(r, &rec, &mut attenuation, &mut scatterd)
+        {
+            return attenuation * color(scatterd, draw_obj, depth + 1);
+        }
+        else
+        {
+            return Vec3::zero();
+        }
     }
 
     // if ray doesn't hit the sphere, paint background

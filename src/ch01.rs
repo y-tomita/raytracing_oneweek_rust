@@ -4,7 +4,7 @@ use math::vec::{Vec3};
 use super::ppm_util::*;
 
 /// create simple rgb gradation image
-pub fn ch1_first_draw(nx: i32, ny: i32)
+pub fn ch01_first_draw(nx: i32, ny: i32)
 {
     ppm_print_header(nx, ny);
     for y in (0..ny).rev()

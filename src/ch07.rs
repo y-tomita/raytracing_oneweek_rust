@@ -13,7 +13,7 @@ use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// impl antialiasing
+/// impl diffuse materials
 pub fn ch07_diffuse_materials(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{

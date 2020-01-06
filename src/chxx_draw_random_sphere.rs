@@ -14,7 +14,7 @@ use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// impl
+/// impl random sphere
 pub fn chxx_draw_random_sphere(nx: i32, ny: i32)
 {
     let mut draw_obj = ScreenObjects{

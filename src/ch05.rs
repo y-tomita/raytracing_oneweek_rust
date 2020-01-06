@@ -12,7 +12,7 @@ use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// create simple sphere image
+/// create multiple sphere
 pub fn ch05_surfase_normals_and_multiple_objects(nx: i32, ny: i32)
 {
     let lower_left_corner = Vec3::new(-2.0, -1.0, -1.0);

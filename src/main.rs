@@ -25,7 +25,8 @@ use ch10::*;
 use ch11::*;
 use chxx_draw_random_sphere::*;
 
-fn main() {
+fn main()
+{
     let args: Vec<String> = env::args().collect();
 
     let nx = args[1].parse::<i32>().unwrap();

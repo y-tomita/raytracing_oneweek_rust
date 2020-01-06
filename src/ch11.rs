@@ -14,7 +14,7 @@ use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// impl
+/// impl blur
 pub fn ch11_blur(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{

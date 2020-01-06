@@ -33,7 +33,5 @@ Thumbs.db.meta
 *.suo
 *.sln
 *.user
-*.unityproj
-*.booproj
 *.vscode
 *.vs

@@ -1,8 +1,4 @@
 *.cs text
-*.rb text
-*.cginc text
-*.shader text
-*.js text
 *.h text
 *.cpp text
 *.c text

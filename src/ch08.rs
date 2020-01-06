@@ -14,7 +14,7 @@ use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// impl antialiasing
+/// impl metal material
 pub fn ch08_metal(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{

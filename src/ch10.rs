@@ -14,7 +14,7 @@ use hitable::material::*;
 
 use super::ppm_util::*;
 
-/// impl
+/// impl positionable camera
 pub fn ch10_positionable_camera(nx: i32, ny: i32)
 {
     let draw_obj = ScreenObjects{
